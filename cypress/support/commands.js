@@ -1,25 +1,23 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add("restartGame", () => {
+  cy.get(".footnote").contains("Restart...").click();
+  cy.get("#board").should("be.visible");
+  cy.get("#message").should("have.text","Select an orange piece to move.");
+});
+
+Cypress.Commands.add("getTile", (name) => {
+  cy.get(`[name='${name}']`);
+});
+
+Cypress.Commands.add("shouldBeMine", (name) => {
+  cy.getTile(name).should("have.attr", "src").and("eq", "you1.gif");
+});
+Cypress.Commands.add("shouldNotBeMine", (name) => {
+  cy.getTile(name).should("have.attr", "src").and("not.eq", "you1.gif");
+  cy.getTile(name).should("have.attr", "src").and("not.eq", "you2.gif");
+});
+Cypress.Commands.add("shouldBeSelected", (name) => {
+  cy.getTile(name).should("have.attr", "src").and("eq", "you2.gif");
+});
+Cypress.Commands.add("shouldBeTheComputer", (name) => {
+  cy.getTile(name).should("have.attr", "src").and("eq", "me1.gif");
+});
