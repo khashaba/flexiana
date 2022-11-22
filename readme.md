@@ -1,4 +1,4 @@
-# Cypress Task
+# Cypress
 
 This repo consists of two tasks 
 - API
